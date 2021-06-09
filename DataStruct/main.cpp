@@ -7,8 +7,20 @@
 #include <bitset>
 #include <set>
 #include <queue>
-
+#include "geohash.hpp"
 using namespace std;
+
+
+// void test_geocode()
+// {
+// 	double lon, lat;
+// 	cout << "input lon : ";
+// 	cin >> lon;
+// 	cout << "input lat : ";
+// 	cin >> lat;
+// 	geolocation geo = {lat, lon};
+// 	cout << "the result : " << encode(geo, 100) << endl;
+// }
 
 #pragma region   图遍历
 //邻接矩阵
@@ -183,8 +195,47 @@ protected:
 #pragma unregion
 
 
+
+template<typename T>
+int binary_search(const std::vector<T> &arr, int left, int right, const T &v)
+{
+    if(arr.empty() ||
+       right < left)
+       return -1;
+
+    int mid = (left + right) >> 1;
+
+    if(arr[mid] == v)
+        return mid;
+    else if(arr[mid] < v)
+    {
+        return binary_search(arr, mid + 1, right, v);
+    }
+    else 
+    {
+        return binary_search(arr,left, mid - 1, v);
+    }
+}
+
+template<typename T>
+int binary_search(const std::vector<T> &arr, const T &v)
+{
+    return binary_search(arr, 0, arr.size() - 1, v);
+}
+
+
 int main(int argc, char **argv)
 {
+
+    test_geocode();
+
+    return -1;
+
+    std::vector<int> values = {1, 3, 5, 7, 10, 13, 20, 22};
+
+    cout << binary_search(values,-101) << endl;
+
+    return -1;
     GraphMatrix<9> graphmtx;
     GraphList      graphlst;
 
